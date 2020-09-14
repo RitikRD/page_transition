@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:swipedetector/swipedetector.dart';
+import 'package:test1/pages/centerpage.dart';
 import 'package:test1/pages/swipeleftpage.dart';
 import 'package:test1/pages/swiperightpage.dart';
+
+import 'pages/swipeleftpage.dart';
+import 'pages/swiperightpage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -28,63 +34,82 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //String _swipeDirection = "";
 
+  final int _numPages = 3;
+  int _currentPage = 1;
+  final PageController _pageController = PageController(initialPage: 1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: SwipeDetector(
-                  child: Card(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: 400,
-                        bottom: 80.0,
-                        left: 16.0,
-                        right: 16.0,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Swipe Me!',
-                            style: TextStyle(
-                              fontSize: 40.0,
-                            ),
-                          ),
-                          ],
-                      ),
-                    ),
-                  ),
-
-
-                  onSwipeLeft: () {
-                    setState(() {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Left()));
-                    });
-                  },
-                  onSwipeRight: () {
-                    setState(() {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Right()));
-                    });
-                  },
-                  swipeConfiguration: SwipeConfiguration(
-                      verticalSwipeMinVelocity: 100.0,
-                      verticalSwipeMinDisplacement: 50.0,
-                      verticalSwipeMaxWidthThreshold:100.0,
-                      horizontalSwipeMaxHeightThreshold: 50.0,
-                      horizontalSwipeMinDisplacement:50.0,
-                      horizontalSwipeMinVelocity: 200.0),
-                ),
-              )
-            ],
+      body: AnnotatedRegion(
+        value: SystemUiOverlayStyle.light,
+        child: PageView(
+          physics: ClampingScrollPhysics(),
+          controller: _pageController,
+          onPageChanged: (int page) => setState(
+            () {
+              _currentPage = page;
+            },
           ),
+          children: <Widget>[
+            Left(),
+            CenterPage(),
+            Right(),
+          ],
         ),
       ),
     );
   }
 }
 
+// Center(
+//         child: Container(
+//           child: Row(
+//             children: <Widget>[
+//               Expanded(
+//                 child: SwipeDetector(
+//                   child: Card(
+//                     child: Container(
+//                       padding: EdgeInsets.only(
+//                         top: 400,
+//                         bottom: 80.0,
+//                         left: 16.0,
+//                         right: 16.0,
+//                       ),
+//                       child: Column(
+//                         mainAxisSize: MainAxisSize.min,
+//                         children: <Widget>[
+//                           Text(
+//                             'Swipe Me!',
+//                             style: TextStyle(
+//                               fontSize: 40.0,
+//                             ),
+//                           ),
+//                           ],
+//                       ),
+//                     ),
+//                   ),
+
+//                   onSwipeLeft: () {
+//                     setState(() {
+//                       Navigator.push(context, MaterialPageRoute(builder: (context) => Left()));
+//                     });
+//                   },
+//                   onSwipeRight: () {
+//                     setState(() {
+//                       Navigator.push(context, MaterialPageRoute(builder: (context) => Right()));
+//                     });
+//                   },
+//                   swipeConfiguration: SwipeConfiguration(
+//                       verticalSwipeMinVelocity: 100.0,
+//                       verticalSwipeMinDisplacement: 50.0,
+//                       verticalSwipeMaxWidthThreshold:100.0,
+//                       horizontalSwipeMaxHeightThreshold: 50.0,
+//                       horizontalSwipeMinDisplacement:50.0,
+//                       horizontalSwipeMinVelocity: 200.0),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),

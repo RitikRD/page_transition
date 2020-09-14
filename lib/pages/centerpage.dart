@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Right extends StatelessWidget {
+class CenterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.brown,
       body: Center(
         child: Text(
-          "RIGHT",
+          "CENTER",
           style: TextStyle(
-            color: Colors.blue,
+            color: Colors.yellow,
           ),
         ),
       ),
